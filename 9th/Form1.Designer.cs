@@ -4,7 +4,6 @@ namespace Card_Information
     {
         private System.ComponentModel.IContainer components = null;
 
-        private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.PictureBox pictureBox1;
@@ -18,6 +17,7 @@ namespace Card_Information
         private System.Windows.Forms.Label lblAdValue;
         private System.Windows.Forms.Label lblAtaAdiValue;
         private System.Windows.Forms.Label lblFINCard;
+        private System.Windows.Forms.Label lblFINValue;
         private System.Windows.Forms.Label lblNumune;
 
         private System.Windows.Forms.Label lblSeriya;
@@ -31,7 +31,7 @@ namespace Card_Information
         private System.Windows.Forms.Label lblAileVez;
         private System.Windows.Forms.Label lblVerilmeTarixi;
         private System.Windows.Forms.Label lblEtibarlidir;
-        private System.Windows.Forms.Label lblVerənOrqan;
+        private System.Windows.Forms.Label lblVerenOrqan;
 
         private System.Windows.Forms.TextBox txtSeriya;
         private System.Windows.Forms.TextBox txtFIN;
@@ -44,7 +44,7 @@ namespace Card_Information
         private System.Windows.Forms.TextBox txtAileVez;
         private System.Windows.Forms.TextBox txtVerilmeTarixi;
         private System.Windows.Forms.TextBox txtEtibarlidir;
-        private System.Windows.Forms.TextBox txtVerənOrqan;
+        private System.Windows.Forms.TextBox txtVerenOrqan;
 
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
@@ -53,18 +53,16 @@ namespace Card_Information
 
         protected override void Dispose(bool disposing)
         {
-            if (disposing && components != null)
+            if (disposing && (components != null))
+            {
                 components.Dispose();
+            }
 
             base.Dispose(disposing);
         }
 
         private void InitializeComponent()
         {
-            this.components =
-                new System.ComponentModel.Container();
-
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.panel1 = new System.Windows.Forms.Panel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
@@ -78,6 +76,7 @@ namespace Card_Information
             this.lblAdValue = new System.Windows.Forms.Label();
             this.lblAtaAdiValue = new System.Windows.Forms.Label();
             this.lblFINCard = new System.Windows.Forms.Label();
+            this.lblFINValue = new System.Windows.Forms.Label();
             this.lblNumune = new System.Windows.Forms.Label();
 
             this.lblSeriya = new System.Windows.Forms.Label();
@@ -91,7 +90,7 @@ namespace Card_Information
             this.lblAileVez = new System.Windows.Forms.Label();
             this.lblVerilmeTarixi = new System.Windows.Forms.Label();
             this.lblEtibarlidir = new System.Windows.Forms.Label();
-            this.lblVerənOrqan = new System.Windows.Forms.Label();
+            this.lblVerenOrqan = new System.Windows.Forms.Label();
 
             this.txtSeriya = new System.Windows.Forms.TextBox();
             this.txtFIN = new System.Windows.Forms.TextBox();
@@ -104,89 +103,108 @@ namespace Card_Information
             this.txtAileVez = new System.Windows.Forms.TextBox();
             this.txtVerilmeTarixi = new System.Windows.Forms.TextBox();
             this.txtEtibarlidir = new System.Windows.Forms.TextBox();
-            this.txtVerənOrqan = new System.Windows.Forms.TextBox();
+            this.txtVerenOrqan = new System.Windows.Forms.TextBox();
 
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
 
+            this.groupBox2.SuspendLayout();
+            this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
 
             // Form
-            this.Text = "Şəxsi Məlumatlar";
-            this.StartPosition =
-                System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.ClientSize = new System.Drawing.Size(1200, 760);
-            this.MinimumSize = new System.Drawing.Size(1050, 700);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(1050, 650);
+            this.Text = "Card Information";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.BackColor = System.Drawing.Color.WhiteSmoke;
 
-            // Sol tərəf
-            this.groupBox1.Text = "Şəxsi məlumat kartı";
-            this.groupBox1.Location = new System.Drawing.Point(20, 20);
-            this.groupBox1.Size = new System.Drawing.Size(550, 590);
-            this.groupBox1.Anchor =
-                System.Windows.Forms.AnchorStyles.Top |
-                System.Windows.Forms.AnchorStyles.Bottom |
-                System.Windows.Forms.AnchorStyles.Left;
+            // Məlumatların daxil edilməsi
+            this.groupBox2.Location = new System.Drawing.Point(20, 20);
+            this.groupBox2.Size = new System.Drawing.Size(490, 540);
+            this.groupBox2.Text = "Şəxsi məlumatlar";
+            this.groupBox2.Font = new System.Drawing.Font("Segoe UI", 10F);
 
-            // Kart
-            this.panel1.Location = new System.Drawing.Point(20, 35);
-            this.panel1.Size = new System.Drawing.Size(510, 460);
-            this.panel1.BackColor = System.Drawing.Color.AliceBlue;
-            this.panel1.BorderStyle =
-                System.Windows.Forms.BorderStyle.FixedSingle;
+            AddField(this.lblSeriya, this.txtSeriya, "Seriya:", 20, 35);
+            AddField(this.lblFIN, this.txtFIN, "FIN kod:", 20, 100);
+            AddField(this.lblSoyad, this.txtSoyad, "Soyad:", 20, 165);
+            AddField(this.lblAd, this.txtAd, "Ad:", 20, 230);
+            AddField(this.lblAtaAdi, this.txtAtaAdi, "Ata adı:", 20, 295);
+            AddField(this.lblCins, this.txtCins, "Cins:", 20, 360);
+
+            AddField(this.lblDogumTarixi, this.txtDogumTarixi, "Doğum tarixi:", 250, 35);
+            AddField(this.lblDogumYeri, this.txtDogumYeri, "Doğum yeri:", 250, 100);
+            AddField(this.lblAileVez, this.txtAileVez, "Ailə vəziyyəti:", 250, 165);
+            AddField(this.lblVerilmeTarixi, this.txtVerilmeTarixi, "Verilmə tarixi:", 250, 230);
+            AddField(this.lblEtibarlidir, this.txtEtibarlidir, "Etibarlıdır:", 250, 295);
+            AddField(this.lblVerenOrqan, this.txtVerenOrqan, "Verən orqan:", 250, 360);
+
+            // Kart görünüşü
+            this.panel1.Location = new System.Drawing.Point(535, 55);
+            this.panel1.Size = new System.Drawing.Size(490, 300);
+            this.panel1.BackColor = System.Drawing.Color.White;
+            this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 
             this.lblBasliq.Text = "AZƏRBAYCAN RESPUBLİKASI";
+            this.lblBasliq.Font = new System.Drawing.Font("Segoe UI", 13F, System.Drawing.FontStyle.Bold);
             this.lblBasliq.Location = new System.Drawing.Point(15, 15);
-            this.lblBasliq.AutoSize = true;
-            this.lblBasliq.Font = new System.Drawing.Font(
-                "Arial", 13, System.Drawing.FontStyle.Bold);
+            this.lblBasliq.Size = new System.Drawing.Size(460, 30);
+            this.lblBasliq.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 
-            this.lblAltBasliq.Text = "Şəxsi məlumat kartı - NÜMUNƏ";
-            this.lblAltBasliq.Location = new System.Drawing.Point(17, 43);
-            this.lblAltBasliq.AutoSize = true;
+            this.lblAltBasliq.Text = "ŞƏXSİYYƏT VƏSİQƏSİ";
+            this.lblAltBasliq.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold);
+            this.lblAltBasliq.Location = new System.Drawing.Point(15, 48);
+            this.lblAltBasliq.Size = new System.Drawing.Size(460, 25);
+            this.lblAltBasliq.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 
-            // Foto
-            this.pictureBox1.Location = new System.Drawing.Point(15, 90);
-            this.pictureBox1.Size = new System.Drawing.Size(125, 155);
-            this.pictureBox1.SizeMode =
-                System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox1.BorderStyle =
-                System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pictureBox1.BackColor = System.Drawing.Color.White;
+            this.pictureBox1.Location = new System.Drawing.Point(20, 90);
+            this.pictureBox1.Size = new System.Drawing.Size(130, 160);
+            this.pictureBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox1.BackColor = System.Drawing.Color.Gainsboro;
 
-            // Kartdakı yazılar
-            this.lblSoyadCard.Text = "Soyad:";
-            this.lblSoyadCard.Location = new System.Drawing.Point(165, 95);
-            this.lblSoyadCard.AutoSize = true;
+            this.lblSoyadCard.Text = "SOYAD:";
+            this.lblSoyadCard.Location = new System.Drawing.Point(170, 95);
+            this.lblSoyadCard.Size = new System.Drawing.Size(100, 22);
 
-            this.lblSoyadValue.Location = new System.Drawing.Point(245, 95);
-            this.lblSoyadValue.Size = new System.Drawing.Size(220, 22);
+            this.lblSoyadValue.Location = new System.Drawing.Point(270, 95);
+            this.lblSoyadValue.Size = new System.Drawing.Size(190, 22);
+            this.lblSoyadValue.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
 
-            this.lblAdCard.Text = "Ad:";
-            this.lblAdCard.Location = new System.Drawing.Point(165, 135);
-            this.lblAdCard.AutoSize = true;
+            this.lblAdCard.Text = "AD:";
+            this.lblAdCard.Location = new System.Drawing.Point(170, 130);
+            this.lblAdCard.Size = new System.Drawing.Size(100, 22);
 
-            this.lblAdValue.Location = new System.Drawing.Point(245, 135);
-            this.lblAdValue.Size = new System.Drawing.Size(220, 22);
+            this.lblAdValue.Location = new System.Drawing.Point(270, 130);
+            this.lblAdValue.Size = new System.Drawing.Size(190, 22);
+            this.lblAdValue.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
 
-            this.lblAtaAdiCard.Text = "Ata adı:";
-            this.lblAtaAdiCard.Location = new System.Drawing.Point(165, 175);
-            this.lblAtaAdiCard.AutoSize = true;
+            this.lblAtaAdiCard.Text = "ATA ADI:";
+            this.lblAtaAdiCard.Location = new System.Drawing.Point(170, 165);
+            this.lblAtaAdiCard.Size = new System.Drawing.Size(100, 22);
 
-            this.lblAtaAdiValue.Location = new System.Drawing.Point(245, 175);
-            this.lblAtaAdiValue.Size = new System.Drawing.Size(220, 22);
+            this.lblAtaAdiValue.Location = new System.Drawing.Point(270, 165);
+            this.lblAtaAdiValue.Size = new System.Drawing.Size(190, 22);
+            this.lblAtaAdiValue.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
 
             this.lblFINCard.Text = "FIN:";
-            this.lblFINCard.Location = new System.Drawing.Point(165, 215);
-            this.lblFINCard.AutoSize = true;
+            this.lblFINCard.Location = new System.Drawing.Point(170, 200);
+            this.lblFINCard.Size = new System.Drawing.Size(100, 22);
 
-            this.lblNumune.Text = "TƏDRİS MƏQSƏDLİ NÜMUNƏ";
-            this.lblNumune.Location = new System.Drawing.Point(100, 390);
-            this.lblNumune.AutoSize = true;
-            this.lblNumune.Font = new System.Drawing.Font(
-                "Arial", 12, System.Drawing.FontStyle.Bold);
-            this.lblNumune.ForeColor = System.Drawing.Color.SteelBlue;
+            this.lblFINValue.Location = new System.Drawing.Point(270, 200);
+            this.lblFINValue.Size = new System.Drawing.Size(190, 22);
+            this.lblFINValue.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
+
+            this.lblNumune.Text = "NÜMUNƏ — RƏSMİ SƏNƏD DEYİL";
+            this.lblNumune.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Italic);
+            this.lblNumune.ForeColor = System.Drawing.Color.DarkRed;
+            this.lblNumune.Location = new System.Drawing.Point(15, 265);
+            this.lblNumune.Size = new System.Drawing.Size(460, 22);
+            this.lblNumune.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 
             this.panel1.Controls.Add(this.lblBasliq);
             this.panel1.Controls.Add(this.lblAltBasliq);
@@ -198,121 +216,66 @@ namespace Card_Information
             this.panel1.Controls.Add(this.lblAtaAdiCard);
             this.panel1.Controls.Add(this.lblAtaAdiValue);
             this.panel1.Controls.Add(this.lblFINCard);
+            this.panel1.Controls.Add(this.lblFINValue);
             this.panel1.Controls.Add(this.lblNumune);
-
-            // Şəkil yüklə
-            this.button3.Text = "Şəkil yüklə...";
-            this.button3.Location = new System.Drawing.Point(20, 510);
-            this.button3.Size = new System.Drawing.Size(510, 45);
-            this.button3.Click += new System.EventHandler(
-                this.button3_Click);
-
-            this.groupBox1.Controls.Add(this.panel1);
-            this.groupBox1.Controls.Add(this.button3);
-
-            // Sağ tərəf
-            this.groupBox2.Text = "Vəsiqə məlumatları";
-            this.groupBox2.Location = new System.Drawing.Point(590, 20);
-            this.groupBox2.Size = new System.Drawing.Size(590, 590);
-            this.groupBox2.Anchor =
-                System.Windows.Forms.AnchorStyles.Top |
-                System.Windows.Forms.AnchorStyles.Bottom |
-                System.Windows.Forms.AnchorStyles.Left |
-                System.Windows.Forms.AnchorStyles.Right;
-
-            // Məlumat xanaları
-            AddField("Seriya və nömrə:", 40,
-                out lblSeriya, out txtSeriya);
-
-            AddField("FIN kod:", 85,
-                out lblFIN, out txtFIN);
-
-            AddField("Soyad:", 130,
-                out lblSoyad, out txtSoyad);
-
-            AddField("Ad:", 175,
-                out lblAd, out txtAd);
-
-            AddField("Ata adı:", 220,
-                out lblAtaAdi, out txtAtaAdi);
-
-            AddField("Cins:", 265,
-                out lblCins, out txtCins);
-
-            AddField("Doğum tarixi:", 310,
-                out lblDogumTarixi, out txtDogumTarixi);
-
-            AddField("Doğum yeri:", 355,
-                out lblDogumYeri, out txtDogumYeri);
-
-            AddField("Ailə vəziyyəti:", 400,
-                out lblAileVez, out txtAileVez);
-
-            AddField("Verilmə tarixi:", 445,
-                out lblVerilmeTarixi, out txtVerilmeTarixi);
-
-            AddField("Etibarlıdır:", 490,
-                out lblEtibarlidir, out txtEtibarlidir);
-
-            AddField("Verən orqan:", 535,
-                out lblVerənOrqan, out txtVerənOrqan);
-
-            // TextChanged hadisələri
-            this.txtSoyad.TextChanged +=
-                new System.EventHandler(this.textBox1_TextChanged);
-
-            this.txtAd.TextChanged +=
-                new System.EventHandler(this.textBox2_TextChanged);
-
-            this.txtAtaAdi.TextChanged +=
-                new System.EventHandler(this.textBox3_TextChanged);
 
             // Düymələr
             this.button1.Text = "Yadda saxla";
-            this.button1.Location = new System.Drawing.Point(780, 635);
-            this.button1.Size = new System.Drawing.Size(150, 45);
-            this.button1.Click += new System.EventHandler(
-                this.button1_Click);
+            this.button1.Location = new System.Drawing.Point(535, 400);
+            this.button1.Size = new System.Drawing.Size(110, 40);
+            this.button1.Click += new System.EventHandler(this.button1_Click);
 
             this.button2.Text = "Təmizlə";
-            this.button2.Location = new System.Drawing.Point(600, 635);
-            this.button2.Size = new System.Drawing.Size(150, 45);
-            this.button2.Click += new System.EventHandler(
-                this.button2_Click);
+            this.button2.Location = new System.Drawing.Point(660, 400);
+            this.button2.Size = new System.Drawing.Size(110, 40);
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+
+            this.button3.Text = "Şəkil yüklə";
+            this.button3.Location = new System.Drawing.Point(785, 400);
+            this.button3.Size = new System.Drawing.Size(110, 40);
+            this.button3.Click += new System.EventHandler(this.button3_Click);
 
             this.button4.Text = "Çıxış";
-            this.button4.Location = new System.Drawing.Point(960, 635);
-            this.button4.Size = new System.Drawing.Size(150, 45);
-            this.button4.Click += new System.EventHandler(
-                this.button4_Click);
+            this.button4.Location = new System.Drawing.Point(910, 400);
+            this.button4.Size = new System.Drawing.Size(110, 40);
+            this.button4.Click += new System.EventHandler(this.button4_Click);
 
-            // Form üzərində yerləşdirmə
-            this.Controls.Add(this.groupBox1);
+            // Hadisələr
+            this.txtSoyad.TextChanged += new System.EventHandler(this.txtSoyad_TextChanged);
+            this.txtAd.TextChanged += new System.EventHandler(this.txtAd_TextChanged);
+            this.txtAtaAdi.TextChanged += new System.EventHandler(this.txtAtaAdi_TextChanged);
+            this.txtFIN.TextChanged += new System.EventHandler(this.txtFIN_TextChanged);
+
+            // Elementləri formaya əlavə et
             this.Controls.Add(this.groupBox2);
+            this.Controls.Add(this.panel1);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.button2);
+            this.Controls.Add(this.button3);
             this.Controls.Add(this.button4);
 
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
+            this.panel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
         }
 
-        // Xanaları yaratmaq üçün metod
         private void AddField(
-            string title,
-            int y,
-            out System.Windows.Forms.Label label,
-            out System.Windows.Forms.TextBox textBox)
+            System.Windows.Forms.Label label,
+            System.Windows.Forms.TextBox textBox,
+            string caption,
+            int x,
+            int y)
         {
-            label = new System.Windows.Forms.Label();
-            label.Text = title;
-            label.Location = new System.Drawing.Point(20, y + 5);
-            label.Size = new System.Drawing.Size(190, 25);
-            label.Font = new System.Drawing.Font("Arial", 10);
+            label.Text = caption;
+            label.Location = new System.Drawing.Point(x, y);
+            label.Size = new System.Drawing.Size(200, 22);
+            label.Font = new System.Drawing.Font("Segoe UI", 9F);
 
-            textBox = new System.Windows.Forms.TextBox();
-            textBox.Location = new System.Drawing.Point(210, y);
-            textBox.Size = new System.Drawing.Size(345, 30);
-            textBox.Font = new System.Drawing.Font("Arial", 10);
+            textBox.Location = new System.Drawing.Point(x, y + 25);
+            textBox.Size = new System.Drawing.Size(205, 25);
+            textBox.Font = new System.Drawing.Font("Segoe UI", 9F);
 
             this.groupBox2.Controls.Add(label);
             this.groupBox2.Controls.Add(textBox);
