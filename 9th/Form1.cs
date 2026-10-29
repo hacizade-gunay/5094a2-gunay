@@ -1,3 +1,4 @@
+
 using System;
 using System.Drawing;
 using System.IO;
@@ -8,92 +9,116 @@ namespace Card_Information
 {
     public partial class Form1 : Form
     {
-        bool k = false;
+        private string sekilYolu = "";
 
         public Form1()
         {
             InitializeComponent();
         }
 
-        // Soyad dəyişdikdə
-        private void textBox1_TextChanged(object sender, EventArgs e)
+        // Ad, soyad, ata adı və FIN kodunu kartda göstərir
+        private void txtSoyad_TextChanged(object sender, EventArgs e)
         {
             lblSoyadValue.Text = txtSoyad.Text;
         }
 
-        // Ad dəyişdikdə
-        private void textBox2_TextChanged(object sender, EventArgs e)
+        private void txtAd_TextChanged(object sender, EventArgs e)
         {
             lblAdValue.Text = txtAd.Text;
         }
 
-        // Ata adı dəyişdikdə
-        private void textBox3_TextChanged(object sender, EventArgs e)
+        private void txtAtaAdi_TextChanged(object sender, EventArgs e)
         {
             lblAtaAdiValue.Text = txtAtaAdi.Text;
+        }
+
+        private void txtFIN_TextChanged(object sender, EventArgs e)
+        {
+            lblFINValue.Text = txtFIN.Text;
         }
 
         // Şəkil yüklə
         private void button3_Click(object sender, EventArgs e)
         {
-            OpenFileDialog d = new OpenFileDialog();
-
-            d.Filter = "Şəkil faylları|*.jpg;*.jpeg;*.png;*.bmp";
-
-            if (d.ShowDialog() == DialogResult.OK)
+            using (OpenFileDialog openFileDialog = new OpenFileDialog())
             {
-                using (Image img = Image.FromFile(d.FileName))
+                openFileDialog.Title = "Şəkil seç";
+                openFileDialog.Filter =
+                    "Şəkil faylları|*.jpg;*.jpeg;*.png;*.bmp";
+
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
-                    pictureBox1.Image = new Bitmap(img);
+                    try
+                    {
+                        using (Image sekil = Image.FromFile(openFileDialog.FileName))
+                        {
+                            pictureBox1.Image = new Bitmap(sekil);
+                        }
+
+                        sekilYolu = openFileDialog.FileName;
+                    }
+                    catch (Exception)
+                    {
+                        MessageBox.Show(
+                            "Şəkli açmaq mümkün olmadı.",
+                            "Xəta",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Error);
+                    }
                 }
             }
         }
 
-        // Məlumatları yoxla və yadda saxla
+        // Məlumatları faylda saxla
         private void button1_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(txtSeriya.Text) ||
-                string.IsNullOrEmpty(txtFIN.Text) ||
-                string.IsNullOrEmpty(txtSoyad.Text) ||
-                string.IsNullOrEmpty(txtAd.Text) ||
-                string.IsNullOrEmpty(txtAtaAdi.Text) ||
-                string.IsNullOrEmpty(txtCins.Text) ||
-                string.IsNullOrEmpty(txtDogumTarixi.Text) ||
-                string.IsNullOrEmpty(txtDogumYeri.Text) ||
-                string.IsNullOrEmpty(txtAileVez.Text) ||
-                string.IsNullOrEmpty(txtVerilmeTarixi.Text) ||
-                string.IsNullOrEmpty(txtEtibarlidir.Text) ||
-                string.IsNullOrEmpty(txtVerənOrqan.Text))
+            TextBox[] xanalar =
             {
-                MessageBox.Show(
-                    "Bütün xanaları doldurun!",
-                    "Xəbərdarlıq",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Warning);
-            }
-            else
-            {
-                DialogResult d = MessageBox.Show(
-                    "Məlumatları yadda saxlamaq istəyirsiniz?",
-                    "Sual",
-                    MessageBoxButtons.YesNo,
-                    MessageBoxIcon.Question);
+                txtSeriya,
+                txtFIN,
+                txtSoyad,
+                txtAd,
+                txtAtaAdi,
+                txtCins,
+                txtDogumTarixi,
+                txtDogumYeri,
+                txtAileVez,
+                txtVerilmeTarixi,
+                txtEtibarlidir,
+                txtVerenOrqan
+            };
 
-                if (d == DialogResult.Yes)
+            foreach (TextBox xana in xanalar)
+            {
+                if (string.IsNullOrWhiteSpace(xana.Text))
                 {
-                    SaveFileDialog s = new SaveFileDialog();
+                    MessageBox.Show(
+                        "Zəhmət olmasa, bütün məlumatları daxil edin.",
+                        "Diqqət",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Warning);
 
-                    s.Filter = "Mətn faylı|*.txt";
-                    s.FileName = "CardInformation.txt";
+                    xana.Focus();
+                    return;
+                }
+            }
 
-                    if (s.ShowDialog() == DialogResult.OK)
+            using (SaveFileDialog saveFileDialog = new SaveFileDialog())
+            {
+                saveFileDialog.Title = "Məlumatları saxla";
+                saveFileDialog.Filter = "Mətn faylı|*.txt";
+                saveFileDialog.FileName = "CardInformation.txt";
+
+                if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    try
                     {
                         StringBuilder melumat = new StringBuilder();
 
-                        melumat.AppendLine("Şəxsi məlumatlar");
-                        melumat.AppendLine("----------------------");
-                        melumat.AppendLine("Seriya və nömrə: " + txtSeriya.Text);
-                        melumat.AppendLine("FIN kod: " + txtFIN.Text);
+                        melumat.AppendLine("KART MƏLUMATLARI");
+                        melumat.AppendLine("-------------------------");
+                        melumat.AppendLine("Seriya: " + txtSeriya.Text);
+                        melumat.AppendLine("FIN: " + txtFIN.Text);
                         melumat.AppendLine("Soyad: " + txtSoyad.Text);
                         melumat.AppendLine("Ad: " + txtAd.Text);
                         melumat.AppendLine("Ata adı: " + txtAtaAdi.Text);
@@ -103,18 +128,27 @@ namespace Card_Information
                         melumat.AppendLine("Ailə vəziyyəti: " + txtAileVez.Text);
                         melumat.AppendLine("Verilmə tarixi: " + txtVerilmeTarixi.Text);
                         melumat.AppendLine("Etibarlıdır: " + txtEtibarlidir.Text);
-                        melumat.AppendLine("Verən orqan: " + txtVerənOrqan.Text);
+                        melumat.AppendLine("Verən orqan: " + txtVerenOrqan.Text);
+                        melumat.AppendLine("Şəkil faylının yolu: " + sekilYolu);
 
                         File.WriteAllText(
-                            s.FileName,
+                            saveFileDialog.FileName,
                             melumat.ToString(),
                             Encoding.UTF8);
 
                         MessageBox.Show(
-                            "Məlumatlar yadda saxlanıldı!",
-                            "Uğurlu əməliyyat",
+                            "Məlumatlar uğurla saxlanıldı.",
+                            "Məlumat",
                             MessageBoxButtons.OK,
                             MessageBoxIcon.Information);
+                    }
+                    catch (Exception)
+                    {
+                        MessageBox.Show(
+                            "Faylı saxlamaq mümkün olmadı.",
+                            "Xəta",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Error);
                     }
                 }
             }
@@ -123,45 +157,55 @@ namespace Card_Information
         // Xanaları təmizlə
         private void button2_Click(object sender, EventArgs e)
         {
-            DialogResult d = MessageBox.Show(
+            DialogResult cavab = MessageBox.Show(
                 "Bütün məlumatları təmizləmək istəyirsiniz?",
-                "Sual",
+                "Təsdiq",
                 MessageBoxButtons.YesNo,
                 MessageBoxIcon.Question);
 
-            if (d == DialogResult.Yes)
+            if (cavab == DialogResult.Yes)
             {
-                txtSeriya.Clear();
-                txtFIN.Clear();
-                txtSoyad.Clear();
-                txtAd.Clear();
-                txtAtaAdi.Clear();
-                txtCins.Clear();
-                txtDogumTarixi.Clear();
-                txtDogumYeri.Clear();
-                txtAileVez.Clear();
-                txtVerilmeTarixi.Clear();
-                txtEtibarlidir.Clear();
-                txtVerənOrqan.Clear();
+                TextBox[] xanalar =
+                {
+                    txtSeriya,
+                    txtFIN,
+                    txtSoyad,
+                    txtAd,
+                    txtAtaAdi,
+                    txtCins,
+                    txtDogumTarixi,
+                    txtDogumYeri,
+                    txtAileVez,
+                    txtVerilmeTarixi,
+                    txtEtibarlidir,
+                    txtVerenOrqan
+                };
+
+                foreach (TextBox xana in xanalar)
+                {
+                    xana.Clear();
+                }
 
                 pictureBox1.Image = null;
+                sekilYolu = "";
 
                 lblSoyadValue.Text = "";
                 lblAdValue.Text = "";
                 lblAtaAdiValue.Text = "";
+                lblFINValue.Text = "";
             }
         }
 
-        // Proqramı bağla
+        // Proqramdan çıx
         private void button4_Click(object sender, EventArgs e)
         {
-            DialogResult d = MessageBox.Show(
+            DialogResult cavab = MessageBox.Show(
                 "Proqramdan çıxmaq istəyirsiniz?",
-                "Sual",
+                "Çıxış",
                 MessageBoxButtons.YesNo,
                 MessageBoxIcon.Question);
 
-            if (d == DialogResult.Yes)
+            if (cavab == DialogResult.Yes)
             {
                 Close();
             }
